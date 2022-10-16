@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import './firebase'
-import 'bootswatch/dist/darkly/bootstrap.min.css'
+import 'bootswatch/dist/superhero/bootstrap.min.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
