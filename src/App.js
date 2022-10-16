@@ -1,8 +1,15 @@
+import React from 'react';
 import './App.css';
+
+import User  from './components/User';
+import UserForm  from './components/UserForm';
 
 function App() {
   return (
-    <h1>Hello world!</h1>
+    <>
+      <UserForm /> 
+      <User />
+    </>
   );
 }
 
