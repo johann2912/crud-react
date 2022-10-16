@@ -1,16 +1,45 @@
 import React, {useEffect, useState} from "react";
 import UserForm from "./UserForm";
 
+import { toast } from 'react-toastify';
 import { db } from "../firebase";
-import {collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, getDocs} from "firebase/firestore";
+import {collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, getDoc} from "firebase/firestore";
 
 const User = () => {
 
     const [forms, setForms] = useState([]);
+    const [currentId, setCurrentId] = useState('');
 
     const addOrEditForm = async (formObject) => {
-       await addDoc(collection(db, 'users'), formObject);
-       console.log('una ueva tarea se ha agregado')
+        try {          
+            if(currentId === ''){
+                await addDoc(collection(db, 'users'), formObject);
+                toast('New form add', {
+                     type: 'success'
+                });
+            } else {
+                const ref = doc(db, 'users', currentId);
+                await updateDoc(ref, formObject);
+                toast('Form updated successfully', {
+                    type: 'success',
+               });
+               setCurrentId('')
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const onDeleteForm = (id) => {
+        if(window.confirm('are you sure you want to delete this form?')){
+            deleteDoc(doc(db, 'users', id));
+            toast('Form removed successfully', {
+                type: 'error',
+                autoClose: 2000,
+           });
+            return true
+        }
+        return false
     }
 
     const getForms = async () => {
@@ -20,8 +49,8 @@ const User = () => {
                 forms.push({...doc.data(), id: doc.id});
             })
             setForms(forms);
-        });
-    };
+        })
+    }
 
     useEffect(() => {
         console.log('SOY EL USEEFFECT EJECUTANDOSE')
@@ -30,7 +59,8 @@ const User = () => {
 
     return <div>
             <div className="col-md-12 p-2">
-                <UserForm addOrEditForm={addOrEditForm} />
+                {/* <UserForm addOrEditForm={addOrEditForm} /> */}
+                <UserForm {...{addOrEditForm, currentId, forms}} />
             </div>
 
             <div className="col-md-12 p-2">
@@ -43,10 +73,20 @@ const User = () => {
                                     target="_blank" 
                                     rel="noopener noreferrer" >
                                         Go to profile GitHub
-                                    <i class="material-icons">undo</i>
+                                    <i 
+                                        className="material-icons" >undo</i>
                                 </a>
 
-                                <i class="material-icons text-danger">close</i>
+                                <div>
+                                    <i className="material-icons text-warning" 
+                                        onClick={() => setCurrentId(userForm.id)} 
+                                    >create</i>
+
+                                    <i className="material-icons text-danger" 
+                                        onClick={() => onDeleteForm(userForm.id)} 
+                                    >close</i>
+                                </div>
+
                             </div>
                             <br />
                             <a 
@@ -54,7 +94,8 @@ const User = () => {
                                 target="_blank"
                                 rel="noopener noreferrer" >
                                     Go to profile Facebook
-                                <i class="material-icons">undo</i>
+                                <i 
+                                    className="material-icons">undo</i>
                             </a>
                             <h4>{userForm.firtsName}</h4>
                             <h4>{userForm.middleName}</h4>

@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 
 import User  from './components/User';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -9,6 +11,7 @@ function App() {
       <div className='row'>
         <User />
       </div>
+      <ToastContainer />
     </div>
   );
 }

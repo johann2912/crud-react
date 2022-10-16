@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { db } from "../firebase";
+import { doc, getDoc} from "firebase/firestore";
 
 const UserForm = (props) => {
 
@@ -23,6 +25,20 @@ const UserForm = (props) => {
         props.addOrEditForm(values);
         setValues({...initialStateValues})
     }
+
+    const getFormById = async (id) => {
+        const form = await getDoc(doc(db, 'users', id));
+        setValues({...form.data()})
+    };
+
+    useEffect(() => {
+        if(props.currentId === '') {
+            setValues({...initialStateValues})
+        } else {
+            console.log('EDITANDO')
+            getFormById(props.currentId);
+        }
+    }, [props.currentId])
 
     return (
         <form className="card card-body" onSubmit={handleSubmit}>
@@ -117,7 +133,7 @@ const UserForm = (props) => {
             </div>
 
             <button className="btn btn-primary btn-block">
-                Save
+                {props.currentId === '' ? 'Save' : 'Update'}
             </button>
         </form>
     )
