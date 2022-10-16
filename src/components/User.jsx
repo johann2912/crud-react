@@ -3,7 +3,7 @@ import UserForm from "./UserForm";
 
 import { toast } from 'react-toastify';
 import { db } from "../firebase";
-import {collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, getDoc} from "firebase/firestore";
+import {collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc} from "firebase/firestore";
 
 const User = () => {
 
@@ -59,7 +59,6 @@ const User = () => {
 
     return <div>
             <div className="col-md-12 p-2">
-                {/* <UserForm addOrEditForm={addOrEditForm} /> */}
                 <UserForm {...{addOrEditForm, currentId, forms}} />
             </div>
 
