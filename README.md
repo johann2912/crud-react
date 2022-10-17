@@ -41,5 +41,5 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 
 ### Estudiante: Johann Gomez Caicedo
-### Deploy Netlify: 
-### Deploy Amplify: 
+##### Deploy Netlify: https://634c9fe5e374d268a2847de4--tranquil-starburst-bd63b3.netlify.app
+##### Deploy Amplify: 
