@@ -50,7 +50,6 @@ const UserForm = (props) => {
                 description: '',
             })
         } else {
-            console.log('EDITANDO')
             getFormById(props.currentId);
         }
     }, [props.currentId])

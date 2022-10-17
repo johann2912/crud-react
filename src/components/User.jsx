@@ -4,6 +4,7 @@ import UserForm from "./UserForm";
 import { toast } from 'react-toastify';
 import { db } from "../firebase";
 import {collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc} from "firebase/firestore";
+import RamdomImage from './ImageRamdom';
 
 const User = () => {
 
@@ -104,9 +105,9 @@ const User = () => {
                         </div>
                     </div>
                 ))}
-            </div>
-    </div> 
-    
+            </div>    
+            <RamdomImage />
+    </div>  
 };
 
 export default User;
