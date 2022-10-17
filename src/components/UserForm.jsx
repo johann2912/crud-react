@@ -4,7 +4,7 @@ import { doc, getDoc} from "firebase/firestore";
 
 const UserForm = (props) => {
 
-    const initialStateValues = {
+    const [values, setValues] = useState({
         github: '',
         facebook: '',
         firtsName: '',
@@ -12,8 +12,7 @@ const UserForm = (props) => {
         lastName: '',
         middleLastName: '',
         description: '',
-    };
-    const [values, setValues] = useState(initialStateValues);
+    });
 
     const handleInputChange = e => {
         const {name, value} = e.target;
@@ -23,7 +22,15 @@ const UserForm = (props) => {
     const handleSubmit = e => {
         e.preventDefault();
         props.addOrEditForm(values);
-        setValues({...initialStateValues})
+        setValues({
+            github: '',
+            facebook: '',
+            firtsName: '',
+            middleName: '',
+            lastName: '',
+            middleLastName: '',
+            description: '',
+        })
     }
 
     const getFormById = async (id) => {
@@ -33,7 +40,15 @@ const UserForm = (props) => {
 
     useEffect(() => {
         if(props.currentId === '') {
-            setValues({...initialStateValues})
+            setValues({
+                github: '',
+                facebook: '',
+                firtsName: '',
+                middleName: '',
+                lastName: '',
+                middleLastName: '',
+                description: '',
+            })
         } else {
             console.log('EDITANDO')
             getFormById(props.currentId);
